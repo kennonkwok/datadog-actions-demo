@@ -6,7 +6,7 @@ on:
         description: 'Event Text'
 jobs:
   send-event:
-    name: Hello world action
+    name: Send Event to Datadog
     runs-on: ubuntu-latest
     steps:
       - name: Datadog
@@ -15,10 +15,10 @@ jobs:
           api-key: ${{ secrets.DATADOG_API_KEY }}
           events: |
             - title: "Hello Datadog!"
-              text: "${{ github.event.head_commit.message }}"
+              text: "${{ github.event.input.event_text }}"
               alert_type: "info"
               source_type_name: "GITHUB"
-              host: ${{ github.repository_owner }}
+              host: "github/${{ github.repository_owner }}"
               tags:
                 - "project:${{ github.repository }}"
                 - "triggered_by:${{ github.actor }}"
